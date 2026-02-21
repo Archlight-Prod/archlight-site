@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Meta Tags -->
+  <meta name="description" content="Arc Light - from darkness to design">
+  <meta property="og:title" content="Arc Light">
+  <meta property="og:description" content="Join the Arc Light waitlist.">
+  <meta property="og:type" content="website">
+
+  <title>Arc Light</title>
+
+  <!-- Favicon placeholder (Good to have) -->
+  <!-- <link rel="icon" type="image/svg+xml" href="ARCLight.svg"> -->
+
+  <!-- Link to the external CSS file -->
+  <link rel="stylesheet" href="styles.css?1.1.9">
+</head>
+<body>
+  <main class="page">
+    <section class="content">
+      <div class="logo-section">
+        <div class="main-logo">
+          <img src="MainLogo.svg?1.1.8" alt="Arc Light logo">
+        </div>
+      </div>
+
+      <div class="bottom-section">
+        <div class="divider"></div>
+
+        <form class="waitlist" id="waitlist" action="https://formsubmit.co/b53b37c9b6273b94aef873215f74e0b6" method="POST">
+        <div class="controls">
+          <input id="email" type="email" name="email" placeholder="Enter your email" required aria-label="Email address" />
+          <button type="submit">Notify Me</button>
+        </div>
+
+        <input type="hidden" name="_subject" value="New Arc Light signup">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <label>
+          <input class="confirm-field" name="_honey" style="display:none" type="text">
+        </label>
+        <input type="hidden" name="_url" value="https://gm.afonsorego.com">
+
+        <p class="success-message" aria-live="polite" role="status">
+          Thank you. We will notify you!
+        </p>
+      </form>
+      </div>
+      <script>
+        const form = document.querySelector('.waitlist');
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault(); // Stops the redirect/new tab
+
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const originalBtnText = submitBtn.textContent;
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Sending...";
+
+          const formData = new FormData(form);
+
+          try {
+            const response = await fetch(form.action, {
+              method: "POST",
+              body: formData,
+              headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+              form.classList.add('success');
+              form.reset();
+            } else {
+              alert("Oops! There was a problem submitting your form.");
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalBtnText;
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("Oops! There was a problem submitting your form.");
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+          }
+        });
+      </script>
+    </section>
+  </main>
+</body>
+</html>

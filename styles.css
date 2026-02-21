@@ -1,0 +1,342 @@
+/* Reset */
+@font-face {
+  font-family: 'GothamNarrow-Thin';
+  src: url('fonts/Gotham Narrow Thin.otf') format('opentype');
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: #050505;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Noise overlay as a pseudo-element for better performance */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Lightweight noise pattern */
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAAAAAC7mC9gAAAAAnRSTlMAAHaTzTgAAAAqSURBVEjH7YyxAQAACAOifv/fW0N0AnG7mS0iInp9H2PzJRERERERERE99S8DAn7vX7wAAAAASUVORK5CYII=");
+  background-repeat: repeat;
+  background-size: 100px 100px;
+  background-blend-mode: overlay;
+  opacity: 0.05;
+  z-index: -1;
+  /* Fixed background hack for some iOS versions */
+  -webkit-transform: translateZ(0);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page {
+  min-height: 100vh;
+  /* Use dvh for better mobile viewport handling if supported, fallback to vh */
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0; /* Reduced horizontal padding to prevent squeezing and overflow */
+}
+
+.content {
+  width: 90%; /* Use percentage instead of vw for safer container sizing */
+  max-width: 1000px;
+  max-height: 80vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.logo-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.bottom-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+
+.main-logo, .divider, .waitlist {
+  opacity: 0;
+  animation: reveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.main-logo {
+  animation-delay: 0.2s;
+}
+
+.divider {
+  animation-delay: 0.5s;
+}
+
+.waitlist {
+  animation-delay: 0.8s;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the top div */
+  width: 100%;
+}
+
+.main-logo img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.main-logo {
+  width: clamp(300px, 100%, 900px);
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden; /* Contain any scaling overflow */
+}
+
+.main-logo img {
+  width: 100%;
+}
+
+@media screen and (max-width: 480px) {
+  .main-logo {
+    width: 100%;
+    max-width: 100%;
+    padding: 5px;
+    overflow: visible; /* Allow scale to show, but body overflow-x:hidden should handle it */
+  }
+  .main-logo img {
+    width: 100%;
+    transform: scale(1.15);
+    transform-origin: center center;
+  }
+}
+
+.divider {
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  margin: 1.5rem auto 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 480px) {
+  .divider {
+    margin: 2rem auto 1.5rem;
+  }
+}
+
+.waitlist {
+  font-family: 'GothamNarrow-Thin', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.waitlist input,
+.waitlist button {
+  font-family: 'GothamNarrow-Thin', sans-serif;
+}
+
+.waitlist input {
+  background: rgba(20, 20, 20, 0);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  padding: 0.7rem 0.9rem;
+  width: 100%;
+  max-width: 320px;
+  font-size: 16px; /* 16px Prevents auto-zoom on iOS when focusing */
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.05em;
+}
+
+.waitlist input::placeholder {
+  color: #999999;
+  letter-spacing: 0.05em;
+  /*text-transform: uppercase;*/
+  font-size: 16px;
+}
+
+.waitlist input:focus::placeholder {
+  color: transparent;
+}
+
+.waitlist input:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(20, 20, 20, 0);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Autofill styles to maintain design when browser suggests email */
+.waitlist input:-webkit-autofill,
+.waitlist input:-webkit-autofill:hover,
+.waitlist input:-webkit-autofill:focus,
+.waitlist input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 100px #050505 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Notify Me button styles */
+.waitlist button {
+  background: #ffffff;
+  color: #050505;
+  border: none;
+  padding: 0.9rem 2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.waitlist button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.15);
+  background: #ffffff;
+}
+
+.waitlist button:active {
+  transform: translateY(0);
+}
+
+.waitlist button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.confirm-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  visibility: hidden;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content {
+    animation: none;
+  }
+}
+
+.success-message {
+  font-family: 'GothamNarrow-Thin', sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffffff;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+}
+
+/* When active */
+.waitlist.success .success-message {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Fade out form controls */
+.waitlist.success input,
+.waitlist.success button {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Smooth transition for controls */
+.waitlist input,
+.waitlist button {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.waitlist.success .controls {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 500px;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+@media screen and (max-width: 600px) {
+  .controls {
+    flex-direction: column;
+    width: 85%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .waitlist input, .waitlist button {
+    max-width: 100%;
+    width: 100%;
+  }
+}
