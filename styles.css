@@ -171,6 +171,8 @@ body {
   }
 }
 
+.confirm-field { display: none !important; }
+
 .waitlist {
   font-family: 'GothamNarrow-Thin', sans-serif;
   display: flex;
